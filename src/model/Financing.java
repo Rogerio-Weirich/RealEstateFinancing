@@ -1,0 +1,25 @@
+package model;
+
+public class Financing {
+    //Attribute: Instance variables
+    private double propertyValue; // Total value of the property
+    private int financingTermInYears; // Duration of the financing in years
+    private double annualInterestRate; // Annual interest Rate ("%" based)
+
+    //Constructor: initializes a new Financing object
+    public Financing(double targetPropertyValue, int financingTermInYears, double annualInterestRate) {
+        this.propertyValue = targetPropertyValue;
+        this.financingTermInYears = financingTermInYears;
+        this.annualInterestRate = annualInterestRate;
+    }
+
+    //Method: calculates the estimated monthly value
+    public double calculateMonthlyValue() {
+        return (this.propertyValue / (this.financingTermInYears * 12)) * (1 + (this.annualInterestRate / 12));
+    }
+
+    //Method: calculates the total value paid at the end of the financing period
+    public double calculateTotalValue() {
+        return this.calculateMonthlyValue() * this.financingTermInYears * 12;
+    }
+}
