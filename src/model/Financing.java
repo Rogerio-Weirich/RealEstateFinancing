@@ -22,4 +22,8 @@ public class Financing {
     public double calculateTotalValue() {
         return this.calculateMonthlyValue() * this.financingTermInYears * 12;
     }
+
+    public double getPropertyValue() {
+        return this.propertyValue;
+    }
 }
