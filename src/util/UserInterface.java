@@ -24,23 +24,23 @@ public class UserInterface {
 
         // 5 properties with values (only properties, no taxes)
         properties.add(new Financing(350000.0, 0, 0)); // propertie 1
-        propertyDetails.add(
-                "House: Centro, Curitiba - PR"
+        propertyDetails.add( //Plot
+                "Plot: Centro, Curitiba - PR"
         );
         properties.add(new Financing(475000.0, 0, 0)); // propertie 2
-        propertyDetails.add(
+        propertyDetails.add( //Apartment
                 "Apartment: Mercês, Curitiba - PR"
         );
         properties.add(new Financing(400000.0, 0, 0)); // propertie 3
-        propertyDetails.add(
+        propertyDetails.add( //House
                 "Townhouse: JD. Social, Curitiba - PR"
         );
         properties.add(new Financing(375000.0, 0, 0)); // propertie 4
-        propertyDetails.add(
+        propertyDetails.add( //House
                 "Loft: Botânico, Curitiba - PR"
         );
         properties.add(new Financing(625000.0, 0, 0)); // propertie 5
-        propertyDetails.add(
+        propertyDetails.add( //Apartment
                 "Penthouse: Batel, Curitiba - PR"
         );
 
@@ -48,33 +48,35 @@ public class UserInterface {
 
     //Method:
     public double getPropertyValue() {
+        // display select property menu
         System.out.println("\n=== SELECT A PROPERTY ===");
-        for (int i = 0; i < properties.size(); i++) {
-            double value = properties.get(i).getPropertyValue();
-            String details = propertyDetails.get(i);
+        for (int i = 0; i < properties.size(); i++) { // iterate property list to display details
+            double value = properties.get(i).getPropertyValue(); // gets property value
+            String details = propertyDetails.get(i);             // gets corresponding description
+            // format and show: number (1 - based), description and real valeus
             System.out.printf("%d. %s - R$ %, .2f%n", (i + 1), details, value);
         }
         System.out.println("==========================");
 
         int choice;
-        do {
+        do { // loop to verify if the entry is integer
             System.out.print("Select the property [1 - 5]: ");
             while (!scanner.hasNextInt()) {
                 System.out.println("Enter a valid number.");
-                scanner.next();
+                scanner.next(); // discard if invalid entry
                 System.out.print("Select the property [1 - 5]: ");
             }
-            choice = scanner.nextInt();
-            if (choice < 1 || choice > 5) {
+            choice = scanner.nextInt(); // reads the valid number
+            if (choice < 1 || choice > 5) { // validates the range of choice
                 System.out.println("Choose between [1 - 5]!");
             }
-        } while (choice < 1 || choice > 5);
+        } while (choice < 1 || choice > 5); // repeat until choice is between 1 - 5
 
-        selectedIndex = choice - 1;
-        return properties.get(selectedIndex).getPropertyValue();
+        selectedIndex = choice - 1; // keeps the selected index, transforming from 0 to 1
+        return properties.get(selectedIndex).getPropertyValue(); // return selected property value
     }
 
-    public String getPropertyDescription() {
+    public String getPropertyDescription() { // return the selected property description
         return propertyDetails.get(selectedIndex);
     }
 

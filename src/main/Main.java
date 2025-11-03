@@ -14,10 +14,11 @@ public class Main {
                 "Welcome to Weikyr's Property Financing!\n"
         );
 
-        ArrayList<Financing> financings = new ArrayList<>();
+        ArrayList<Financing> financings = new ArrayList<>();          // list for financings
+        ArrayList<String>    propertyDescriptions = new ArrayList<>();// list for property descriptions
         char choice; //Controls the loop
-
         int financingCount = 1; // iterates for "current financing x"
+
         do {
             System.out.println("Current Financing " + financingCount + ".");
             double propertyValue = userInterface.getPropertyValue(); // Choose between available options
@@ -29,6 +30,7 @@ public class Main {
             // Creates and add to a list
             Financing newFinancing = new Financing(propertyValue, financingTermInYears, interestRate);
             financings.add(newFinancing);
+            propertyDescriptions.add(description);
             // shows monthly instalment and full details
             System.out.println("\n=== FINANCING DETAILS ===");
             System.out.printf("Property Value: R$ %,.2f%n", newFinancing.getPropertyValue());
@@ -59,11 +61,12 @@ public class Main {
         System.out.println("=== FINANCING SUMMARY ===");
         for (int i = 0; i < financings.size(); i++) { // shows each financing's details
             Financing f = financings.get(i);
+            String d = propertyDescriptions.get(i);
             // usage of getPropertyValue() to access the private attribute propertyValue
             System.out.println(
-                    "Financing " + (i + 1) +
-                    " - property value: R$ " + String.format("%,.2f", f.getPropertyValue()) +
-                    ", Financing Value: R$ " + String.format("%,.2f", f.calculateTotalValue())
+                    "Financing " + (i + 1) + " - " + d +
+                    "\nProperty Value: R$ " + String.format("%,.2f", f.getPropertyValue()) +
+                    "\nFinancing Value: R$ " + String.format("%,.2f", f.calculateTotalValue())
             );
             totalProperties += f.getPropertyValue(); // Acccumulate the total property value
             totalFinancings += f.calculateTotalValue(); // Accumulate the total financing value
