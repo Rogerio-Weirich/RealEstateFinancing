@@ -1,21 +1,24 @@
 package model;
 
 public class Plot extends Financing {
+    /*
+    Constructor for House class
+    Calls superclass (Finacing) to initialize Attributes
+     */
     public Plot(double targetPropertyValue, int financingTermInYears, double annualInterestRate) {
         super(targetPropertyValue, financingTermInYears, annualInterestRate);
     }
 
     @Override
     public double calculateMonthlyValue() {
-        double r = getMonthlyRate() * 1.20;
-        int    m = getTotalMonths();
-        if (r == 0)
-            return getPropertyValue() / m;
-        double pow = Math.pow(1 + r, m);
-        return getPropertyValue() * (r * pow) / (pow - 1);
+        // get the vase instalment value (w/ interest) from superclass
+        double installmentWithInterest = super.calculateMonthlyValue();
+        // Apply 2% (addicional cost/fee)
+        return installmentWithInterest * 1.02;
     }
 
     @Override
+    // Reuse the calculateMonthlyValue() of this subclass
     public double calculateTotalValue() {
         return calculateMonthlyValue() * getTotalMonths();
     }
