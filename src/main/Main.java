@@ -31,16 +31,6 @@ public class Main {
             Financing newFinancing = new Financing(propertyValue, financingTermInYears, interestRate);
             financings.add(newFinancing);
             propertyDescriptions.add(description);
-            // shows monthly instalment and full details
-            System.out.println("\n=== FINANCING DETAILS ===");
-            System.out.printf("Property Value: R$ %,.2f%n", newFinancing.getPropertyValue());
-            System.out.printf("Term: %d years (%d months)%n", financingTermInYears, financingTermInYears * 12);
-            System.out.printf("Annual Interest Rate: %.2f%% (%.4f%% mothly)%n", interestRate, interestRate / 12);
-            System.out.printf("Montlhy Payment: R$ %,.2f%n", newFinancing.calculateMonthlyValue());
-            System.out.printf(
-                    "Total paid: R$ %,.2f%n", newFinancing.calculateTotalValue() - newFinancing.getPropertyValue()
-            );
-            System.out.println();
             // Asks if user wants to continue the simulation
             while (true) { // loop for validation
                 System.out.print("Do you want to simulate another Financing? [ Y = Yes | N = No ]: ");
@@ -58,24 +48,39 @@ public class Main {
         double totalProperties = 0; // Variable for total of properties
         double totalFinancings = 0; // Variable for total of financings
 
+        // shows monthly instalment and full details (with polymorphism)
         System.out.println("=== FINANCING SUMMARY ===");
         for (int i = 0; i < financings.size(); i++) { // shows each financing's details
             Financing f = financings.get(i);
             String d = propertyDescriptions.get(i);
             // usage of getPropertyValue() to access the private attribute propertyValue
-            System.out.println(
-                    "Financing " + (i + 1) + " - " + d +
-                    "\nProperty Value: R$ " + String.format("%,.2f", f.getPropertyValue()) +
-                    "\nFinancing Value: R$ " + String.format("%,.2f", f.calculateTotalValue())
-            );
-            totalProperties += f.getPropertyValue(); // Acccumulate the total property value
-            totalFinancings += f.calculateTotalValue(); // Accumulate the total financing value
+            System.out.println("\nFinancing " + (i + 1) + " - " + d);
+            System.out.println("-------------------------");
+
+            System.out.printf("Property Value: R$ %,.2f%n", f.getPropertyValue());
+
+            int years = f.getFinancingTermInYears();
+            int months = years * 12;
+            System.out.printf("Term: %d years (%d months)%n", years, months);
+
+            double annualRate = f.getAnnualInterestRate();
+            double monthlyRatePercent = annualRate / 12;
+            System.out.printf("Annual Interest Rate: %.2f%% (%.4f%% monthly)%n", annualRate, monthlyRatePercent);
+
+            double monthlyPayment = f.calculateMonthlyValue();  // ← usa +80 se for House!
+            System.out.printf("Monthly Payment: R$ %,.2f%n", monthlyPayment);
+
+            double totalPaid = f.calculateTotalValue();
+            System.out.printf("Total paid (interest): R$ %,.2f%n", totalPaid - f.getPropertyValue());
+
+            totalProperties += f.getPropertyValue();
+            totalFinancings += totalPaid;
         }
 
-        System.out.println( // Displays the total values for all property and financing
-                "\nTotal properties value is: R$ " + String.format("%,.2f" ,totalProperties) +
-                ". \nTotal financings value is: R$ " + String.format("%,.2f" ,totalFinancings) + "."
-        );
+        // Aims to display all financings if multiple was selected
+        System.out.println("-------------------------");
+        System.out.printf("%nTotal properties value is: R$ %,.2f%n", totalProperties);
+        System.out.printf("Total financings value is: R$ %,.2f%n", totalFinancings);
 
         // Close the scanner 🥺
         scanner.close();

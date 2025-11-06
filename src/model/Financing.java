@@ -13,6 +13,18 @@ public class Financing {
         this.annualInterestRate = annualInterestRate;
     }
 
+    public double getPropertyValue()        {return propertyValue;}
+    public int    getFinancingTermInYears() {return financingTermInYears;}
+    public double getAnnualInterestRate()   {return annualInterestRate;}
+
+    protected double getMonthlyRate() {
+        return annualInterestRate / 100.0 / 12.0;
+    }
+
+    protected int getTotalMonths() {
+        return financingTermInYears * 12;
+    }
+
     //Method: calculates the estimated monthly value
     public double calculateMonthlyValue() {
         return (this.propertyValue / (this.financingTermInYears * 12)) * (1 + (this.annualInterestRate / 12));
@@ -22,8 +34,5 @@ public class Financing {
     public double calculateTotalValue() {
         return this.calculateMonthlyValue() * this.financingTermInYears * 12;
     }
-
-    public double getPropertyValue() {
-        return this.propertyValue;
-    }
 }
+

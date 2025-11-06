@@ -1,6 +1,9 @@
 package util;
 
 import model.Financing;
+import model.Apartment;
+import model.House;
+import model.Plot;
 
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -23,27 +26,26 @@ public class UserInterface {
         propertyDetails = new ArrayList<>();
 
         // 5 properties with values (only properties, no taxes)
-        properties.add(new Financing(350000.0, 0, 0)); // propertie 1
+        properties.add(new Plot(350000.0, 0, 0)); // propertie 1
         propertyDetails.add( //Plot
                 "Plot: Centro, Curitiba - PR"
         );
-        properties.add(new Financing(475000.0, 0, 0)); // propertie 2
+        properties.add(new Apartment(475000.0, 0, 0)); // propertie 2
         propertyDetails.add( //Apartment
                 "Apartment: Mercês, Curitiba - PR"
         );
-        properties.add(new Financing(400000.0, 0, 0)); // propertie 3
+        properties.add(new House(400000.0, 0, 0)); // propertie 3
         propertyDetails.add( //House
                 "Townhouse: JD. Social, Curitiba - PR"
         );
-        properties.add(new Financing(375000.0, 0, 0)); // propertie 4
+        properties.add(new House(375000.0, 0, 0)); // propertie 4
         propertyDetails.add( //House
                 "Loft: Botânico, Curitiba - PR"
         );
-        properties.add(new Financing(625000.0, 0, 0)); // propertie 5
+        properties.add(new Apartment(625000.0, 0, 0)); // propertie 5
         propertyDetails.add( //Apartment
                 "Penthouse: Batel, Curitiba - PR"
         );
-
     }
 
     //Method:
