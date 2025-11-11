@@ -1,13 +1,19 @@
 package model;
 
 public class Plot extends Financing {
+    private String zoneType;
+
     /*
-    Constructor for House class
+    Constructor for Plot class
     Calls superclass (Finacing) to initialize Attributes
      */
-    public Plot(double targetPropertyValue, int financingTermInYears, double annualInterestRate) {
+    public Plot(double targetPropertyValue, int financingTermInYears, double annualInterestRate, String zoneType) {
         super(targetPropertyValue, financingTermInYears, annualInterestRate);
+        this.zoneType = zoneType;
     }
+
+    //getter for zone type
+    public String getZoneType() {return zoneType;}
 
     @Override
     public double calculateMonthlyValue() {

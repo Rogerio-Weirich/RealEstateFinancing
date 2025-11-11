@@ -1,13 +1,22 @@
 package model;
 
 public class Apartment extends Financing {
+    private int garageSpots;
+    private int floorNumber;
+
     /*
     Constructor for Apartment class
     Calls superclass (Finacing) to initialize Attributes
      */
-    public Apartment(double targetPropertyValue, int financingTermInYears, double annualInterestRate) {
+    public Apartment(double targetPropertyValue, int financingTermInYears, double annualInterestRate, int garageSpots, int floorNumber) {
         super(targetPropertyValue, financingTermInYears, annualInterestRate);
+        this.garageSpots = garageSpots;
+        this.floorNumber = floorNumber;
     }
+
+    //getters for garage spots and floors in a Building with apartments
+    public int getGarageSpots() {return garageSpots;}
+    public int getFloorNumber() {return floorNumber;}
 
     @Override
     public double calculateMonthlyValue() {
