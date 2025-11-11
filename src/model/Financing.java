@@ -1,6 +1,6 @@
 package model;
 
-public class Financing {
+public abstract class Financing {
     //Attribute: Instance variables
     private double propertyValue; // Total value of the property
     private int financingTermInYears; // Duration of the financing in years
