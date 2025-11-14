@@ -11,8 +11,9 @@ import java.util.ArrayList;
 public class UserInterface {
     //Attibute: responsible for reading user input
     private Scanner scanner;
-    private ArrayList<Financing> properties;  // to create a list containing 5 properties
-    private ArrayList<String> propertyDetails;// to provide each property its own description
+    private ArrayList<Double> propertyValues;
+    private ArrayList<String> propertyDetails;
+    private ArrayList<String> propertyTypes;
     private int selectedIndex;                 // keeps the selected index
 
     //Constructor: initializes the interface with a given Scanner
@@ -22,29 +23,41 @@ public class UserInterface {
     }
 
     private void initProperties() {
-        properties = new ArrayList<>();
+        propertyValues  = new ArrayList<>();
         propertyDetails = new ArrayList<>();
+        propertyTypes   = new ArrayList<>();
 
-        // 5 properties with values (only properties, no taxes)
-        properties.add(new Plot(350000.0, 0, 0)); // propertie 1
+        // 6 properties with values (only properties, no taxes)
+        propertyValues.add(550000.0); // property 1
+        propertyTypes.add("Commercial Lot");
+        propertyDetails.add( //Plot
+                "Plot: Cidade Industrial, Curitiba - PR"
+        );
+
+        propertyValues.add(350000.0); // property 2
+        propertyTypes.add("Residential Lot");
         propertyDetails.add( //Plot
                 "Plot: Centro, Curitiba - PR"
         );
-        properties.add(new Apartment(475000.0, 0, 0)); // propertie 2
-        propertyDetails.add( //Apartment
-                "Apartment: Mercês, Curitiba - PR"
-        );
-        properties.add(new House(400000.0, 0, 0)); // propertie 3
+        propertyValues.add(400000.0); // property 3
+        propertyTypes.add("House");
         propertyDetails.add( //House
                 "Townhouse: JD. Social, Curitiba - PR"
         );
-        properties.add(new House(375000.0, 0, 0)); // propertie 4
+        propertyValues.add(375000.0); // property 4
+        propertyTypes.add("House");
         propertyDetails.add( //House
                 "Loft: Botânico, Curitiba - PR"
         );
-        properties.add(new Apartment(625000.0, 0, 0)); // propertie 5
+        propertyValues.add(625000.0); // property 5
+        propertyTypes.add("Apartment");
         propertyDetails.add( //Apartment
                 "Penthouse: Batel, Curitiba - PR"
+        );
+        propertyValues.add(475000.0); // property 6
+        propertyTypes.add("Apartment");
+        propertyDetails.add( //Apartment
+                "Apartment: Mercês, Curitiba - PR"
         );
     }
 
@@ -52,9 +65,9 @@ public class UserInterface {
     public double getPropertyValue() {
         // display select property menu
         System.out.println("\n=== SELECT A PROPERTY ===");
-        for (int i = 0; i < properties.size(); i++) { // iterate property list to display details
-            double value = properties.get(i).getPropertyValue(); // gets property value
-            String details = propertyDetails.get(i);             // gets corresponding description
+        for (int i = 0; i < propertyValues.size(); i++) { // iterate property list to display details
+            double value = propertyValues.get(i);         // gets property value
+            String details = propertyDetails.get(i);      // gets corresponding description
             // format and show: number (1 - based), description and real valeus
             System.out.printf("%d. %s - R$ %, .2f%n", (i + 1), details, value);
         }
@@ -74,8 +87,8 @@ public class UserInterface {
             }
         } while (choice < 1 || choice > 5); // repeat until choice is between 1 - 5
 
-        selectedIndex = choice - 1; // keeps the selected index, transforming from 0 to 1
-        return properties.get(selectedIndex).getPropertyValue(); // return selected property value
+        selectedIndex = choice - 1;               // keeps the selected index, transforming from 0 to 1
+        return propertyValues.get(selectedIndex); // return selected property value
     }
 
     public String getPropertyDescription() { // return the selected property description
