@@ -17,8 +17,9 @@ public class Main {
                 "Welcome to Weikyr's Property Financing!\n"
         );
 
-        ArrayList<Financing> financings = new ArrayList<>();          // list for financings
-        ArrayList<String>    propertyDescriptions = new ArrayList<>();// list for property descriptions
+        ArrayList<Financing> financings           = new ArrayList<>(); // list for financings
+        ArrayList<String>    propertyDescriptions = new ArrayList<>(); // list for property descriptions
+        ArrayList<String>    plotZoneTypes        = new ArrayList<>(); // list zone types
         char choice; //Controls the loop
         int financingCount = 1; // iterates for "current financing x"
 
@@ -31,7 +32,24 @@ public class Main {
             // asks for term and rate
             int financingTermInYears = userInterface.getFinancingTerm();
             double interestRate = userInterface.getAnnualInterestRate();
-            scanner.nextLine();
+            // asks type of Plot
+            String zoneType = "Residential"; // default plot type
+            if (type.equals("Plot")) {
+                System.out.print("Select the plot type: [ Commercial || Residential ]: ");
+                String input = scanner.nextLine().trim();
+                if (input.isEmpty()) {
+                    System.out.println("No input provided. Using default: Residential");
+                } else if (input.toLowerCase().startsWith("c")) {
+                    zoneType = "Commercial";
+                    System.out.println("Selected plot type is: Commercial");
+                } else if (input.toLowerCase().startsWith("r")) {
+                    zoneType = "Residential";
+                    System.out.println("Selected plot type is: Residential");
+                } else {
+                    System.out.println("Invalid input. Using default: Residential");
+                }
+            }
+
             // Creates and add to a list
             Financing newFinancing = null;
             if (type.equals("House")) {
@@ -41,6 +59,7 @@ public class Main {
                 double landSize = scanner.nextDouble();
                 scanner.nextLine();
                 newFinancing = new House(propertyValue, financingTermInYears, interestRate, builtAreaSize, landSize);
+                plotZoneTypes.add("");
             } else if (type.equals("Apartment")) {
                 System.out.print("Enter the number of Garage spots: ");
                 int garageSpots = scanner.nextInt();
@@ -48,11 +67,12 @@ public class Main {
                 int floorNumber = scanner.nextInt();
                 scanner.nextLine();
                 newFinancing = new Apartment(propertyValue, financingTermInYears, interestRate, garageSpots, floorNumber);
-            } else if (type.contains("Lot")) {
-                System.out.println("Current selected Zone Type is: " + type);
-                System.out.print("Confirm or Enter the Zone Type [ Commercial or Residential ]: ");
-                String zoneTypeInput = scanner.nextLine();
-                newFinancing = new Plot(propertyValue, financingTermInYears, interestRate, zoneTypeInput);
+                plotZoneTypes.add("");
+            } else if (type.equals("Plot")) {
+                newFinancing = new Plot(propertyValue, financingTermInYears, interestRate, zoneType);
+                plotZoneTypes.add(zoneType);
+            } else {
+                plotZoneTypes.add("Residential"); // for Apartment and House (they don't use it)
             }
             financings.add(newFinancing);
             propertyDescriptions.add(description);
@@ -78,8 +98,14 @@ public class Main {
         for (int i = 0; i < financings.size(); i++) { // shows each financing's details
             Financing f = financings.get(i);
             String d = propertyDescriptions.get(i);
+            String zone = plotZoneTypes.get(i);
+            String fullDescription = d;
+            if (f instanceof Plot && !zone.isEmpty()) {
+                fullDescription = "Type: " + zone + " - " + d;
+            }
+
             // usage of getPropertyValue() to access the private attribute propertyValue
-            System.out.println("\nFinancing " + (i + 1) + " - " + d);
+            System.out.println("\nFinancing " + (i + 1) + " - " + fullDescription);
             System.out.println("-------------------------");
 
             System.out.printf("Property Value: R$ %,.2f%n", f.getPropertyValue());
