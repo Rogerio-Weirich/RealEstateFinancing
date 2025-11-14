@@ -1,6 +1,9 @@
 package main;
 
 import model.Financing;
+import model.Plot;
+import model.House;
+import model.Apartment;
 import util.UserInterface;
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -22,13 +25,35 @@ public class Main {
         do {
             System.out.println("Current Financing " + financingCount + ".");
             double propertyValue = userInterface.getPropertyValue(); // Choose between available options
-            String description = userInterface.getPropertyDescription();
+            String description = userInterface.getPropertyDescription(); // gets property Description
+            String type = userInterface.getPropertyType().trim();
             System.out.println("The selected property is \"" + description + "\"\n");
             // asks for term and rate
             int financingTermInYears = userInterface.getFinancingTerm();
             double interestRate = userInterface.getAnnualInterestRate();
+            scanner.nextLine();
             // Creates and add to a list
-            Financing newFinancing = new Financing(propertyValue, financingTermInYears, interestRate);
+            Financing newFinancing = null;
+            if (type.equals("House")) {
+                System.out.print("Enter the built area size: ");
+                double builtAreaSize = scanner.nextDouble();
+                System.out.print("Enter the land size: ");
+                double landSize = scanner.nextDouble();
+                scanner.nextLine();
+                newFinancing = new House(propertyValue, financingTermInYears, interestRate, builtAreaSize, landSize);
+            } else if (type.equals("Apartment")) {
+                System.out.print("Enter the number of Garage spots: ");
+                int garageSpots = scanner.nextInt();
+                System.out.print("Entenr the floor number: ");
+                int floorNumber = scanner.nextInt();
+                scanner.nextLine();
+                newFinancing = new Apartment(propertyValue, financingTermInYears, interestRate, garageSpots, floorNumber);
+            } else if (type.contains("Lot")) {
+                System.out.println("Current selected Zone Type is: " + type);
+                System.out.print("Confirm or Enter the Zone Type [ Commercial or Residential ]: ");
+                String zoneTypeInput = scanner.nextLine();
+                newFinancing = new Plot(propertyValue, financingTermInYears, interestRate, zoneTypeInput);
+            }
             financings.add(newFinancing);
             propertyDescriptions.add(description);
             // Asks if user wants to continue the simulation
@@ -67,7 +92,21 @@ public class Main {
             double monthlyRatePercent = annualRate / 12;
             System.out.printf("Annual Interest Rate: %.2f%% (%.4f%% monthly)%n", annualRate, monthlyRatePercent);
 
-            double monthlyPayment = f.calculateMonthlyValue();  // ← usa +80 se for House!
+            // Display specific atrtibutes based on type
+            if (f instanceof House) {
+                House h = (House) f;
+                System.out.printf("Built Area Size: %.2f m²%n", h.getBuiltAreaSize());
+                System.out.printf("Land Size: %.2f m²%n", h.getLandSize());
+            } else if (f instanceof Apartment) {
+                Apartment a = (Apartment) f;
+                System.out.printf("Garage Spots: %d%n", a.getGarageSpots());
+                System.out.printf("Floor Number: %d%n", a.getFloorNumber());
+            } else if (f instanceof Plot) {
+                Plot p = (Plot) f;
+                System.out.printf("Zone Type: %s%n", p.getZoneType());
+            }
+
+            double monthlyPayment = f.calculateMonthlyValue();  // Uses +80 if its house
             System.out.printf("Monthly Payment: R$ %,.2f%n", monthlyPayment);
 
             double totalPaid = f.calculateTotalValue();
