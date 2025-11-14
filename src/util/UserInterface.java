@@ -19,7 +19,7 @@ public class UserInterface {
     //Constructor: initializes the interface with a given Scanner
     public UserInterface(Scanner scanner) {
         this.scanner = scanner;
-        initProperties();  // Initializes the 5 properties
+        initProperties();  // Initializes the 6 properties
     }
 
     private void initProperties() {
@@ -75,17 +75,17 @@ public class UserInterface {
 
         int choice;
         do { // loop to verify if the entry is integer
-            System.out.print("Select the property [1 - 5]: ");
+            System.out.print("Select the property [1 - 6]: ");
             while (!scanner.hasNextInt()) {
                 System.out.println("Enter a valid number.");
                 scanner.next(); // discard if invalid entry
-                System.out.print("Select the property [1 - 5]: ");
+                System.out.print("Select the property [1 - 6]: ");
             }
             choice = scanner.nextInt(); // reads the valid number
-            if (choice < 1 || choice > 5) { // validates the range of choice
-                System.out.println("Choose between [1 - 5]!");
+            if (choice < 1 || choice > 6) { // validates the range of choice
+                System.out.println("Choose between [1 - 6]!");
             }
-        } while (choice < 1 || choice > 5); // repeat until choice is between 1 - 5
+        } while (choice < 1 || choice > 6); // repeat until choice is between 1 - 6
 
         selectedIndex = choice - 1;               // keeps the selected index, transforming from 0 to 1
         return propertyValues.get(selectedIndex); // return selected property value
@@ -93,6 +93,10 @@ public class UserInterface {
 
     public String getPropertyDescription() { // return the selected property description
         return propertyDetails.get(selectedIndex);
+    }
+
+    public String getPropertyType() { // return the selected property type
+        return propertyTypes.get(selectedIndex);
     }
 
     //Method
