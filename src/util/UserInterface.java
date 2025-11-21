@@ -1,10 +1,5 @@
 package util;
 
-import model.Financing;
-import model.Apartment;
-import model.House;
-import model.Plot;
-
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -29,13 +24,13 @@ public class UserInterface {
 
         // 6 properties with values (only properties, no taxes)
         propertyValues.add(550000.0); // property 1
-        propertyTypes.add("Commercial Lot");
+        propertyTypes.add("Plot");
         propertyDetails.add( //Plot
                 "Plot: Cidade Industrial, Curitiba - PR"
         );
 
         propertyValues.add(350000.0); // property 2
-        propertyTypes.add("Residential Lot");
+        propertyTypes.add("Plot");
         propertyDetails.add( //Plot
                 "Plot: Centro, Curitiba - PR"
         );
@@ -110,6 +105,7 @@ public class UserInterface {
                 scanner.next(); // discard invalid inputs
             }
             value = scanner.nextInt(); //read the valid integer
+            scanner.nextLine();
             if (value <= 0) { // check if the value is positive
                 System.out.println("The Financing Term has to be more than Zero.");
             }
@@ -128,6 +124,7 @@ public class UserInterface {
                 scanner.next(); // discard invalid inputs
             }
             value = scanner.nextDouble(); //read the valid integer
+            scanner.nextLine();
             if (value <= 0) { // check if the value is positive
                 System.out.println("The Annual Interest Rate has to be more than Zero.");
             }

@@ -132,14 +132,19 @@ public class Main {
                 System.out.printf("Zone Type: %s%n", p.getZoneType());
             }
 
-            double monthlyPayment = f.calculateMonthlyValue();  // Uses +80 if its house
-            System.out.printf("Monthly Payment: R$ %,.2f%n", monthlyPayment);
-
+            double monthlyPayment = f.calculateMonthlyValue(); // uses +80 if its house
             double totalPaid = f.calculateTotalValue();
-            System.out.printf("Total paid (interest): R$ %,.2f%n", totalPaid - f.getPropertyValue());
 
-            totalProperties += f.getPropertyValue();
-            totalFinancings += totalPaid;
+            if (monthlyPayment < 0) { // Hoyse financing rejected due to disproportionate increase
+                System.out.println("Monthly Payment: FINANCING REJECTED!");
+                System.out.println("Reason: R$ 80,00 increase exceeds half of monthly interest.");
+                System.out.printf("Total paid (interest): NOT CALCULATED%n");
+            } else { // Do not incluse in total Sums
+                System.out.printf("Monthly Payment: R$ %,.2f%n", monthlyPayment);
+                System.out.printf("Total paid(interest): R$ %,.2f%n", totalPaid - f.getPropertyValue());
+                totalProperties += f.getPropertyValue();
+                totalFinancings += totalPaid;
+            }
         }
 
         // Aims to display all financings if multiple was selected
