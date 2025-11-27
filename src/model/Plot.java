@@ -1,6 +1,9 @@
 package model;
 
-public class Plot extends Financing {
+import java.io.Serializable;
+
+public class Plot extends Financing implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String zoneType;
 
     /*

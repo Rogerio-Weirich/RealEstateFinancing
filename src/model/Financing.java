@@ -1,7 +1,10 @@
 package model;
 
-public abstract class Financing {
+import java.io.Serializable;
+
+public abstract class Financing implements Serializable {
     //Attribute: Instance variables
+    private static final long serialVersionUID = 1L;
     private double propertyValue; // Total value of the property
     private int financingTermInYears; // Duration of the financing in years
     private double annualInterestRate; // Annual interest Rate ("%" based)
@@ -17,10 +20,12 @@ public abstract class Financing {
     public int    getFinancingTermInYears() {return financingTermInYears;}
     public double getAnnualInterestRate()   {return annualInterestRate;}
 
+    //Method: calculates the monthly interest rate
     protected double getMonthlyRate() {
         return annualInterestRate / 100.0 / 12.0;
     }
 
+    // Method: calculate the total number of months for the financing
     protected int getTotalMonths() {
         return financingTermInYears * 12;
     }

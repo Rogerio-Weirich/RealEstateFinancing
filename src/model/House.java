@@ -2,7 +2,10 @@ package model;
 
 import util.IncreaseGreatherThanInterestException;
 
-public class House extends Financing {
+import java.io.Serializable;
+
+public class House extends Financing implements Serializable {
+    private static final long serialVersionUID = 1L;
     private double builtAreaSize;
     private double landSize;
 
