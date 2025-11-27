@@ -3,7 +3,7 @@ package util;
 import java.util.Scanner;
 import java.util.ArrayList;
 
-public class UserInterface {
+public class UserInterface implements InputProvider {
     //Attibute: responsible for reading user input
     private Scanner scanner;
     private ArrayList<Double> propertyValues;
